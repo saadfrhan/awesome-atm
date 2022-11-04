@@ -1,3 +1,5 @@
+import { validateVal } from "./utils";
+
 export const questions = [
   {
     type: 'input',
@@ -34,9 +36,3 @@ export const questions = [
   }
 ]
 
-function validateVal(len?: number) {
-  return (val: string) => {
-    const isValid = len ? val.length === len : val !== '';
-    return isValid || 'Please enter correctly!';
-  }
-}

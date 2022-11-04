@@ -2,12 +2,12 @@ import inquirer from "inquirer"
 import promptQuestions from ".";
 import { questions } from "./questions";
 import { InquirerPromptFuncI, LogsI } from "./ts/interfaces";
+import { promptInquirer } from "./utils";
 
-let amount = 0;
-let logs: LogsI[] = []
 
 export default function perfAction({ operation, money }: { operation: string, money: number }) {
-  amount = money
+  let logs: LogsI[] = []
+  let amount = money || 0;
   switch (operation) {
     case 'ADD':
       promptInquirer({
@@ -87,12 +87,3 @@ export default function perfAction({ operation, money }: { operation: string, mo
   }
 }
 
-function promptInquirer({ message, validateMessage, action, defaultVal, validateFunc, name }: InquirerPromptFuncI) {
-  inquirer.prompt([{
-    type: 'input',
-    name,
-    message,
-    default: defaultVal,
-    validate: validateFunc || validateMessage,
-  }]).then(action);
-}
