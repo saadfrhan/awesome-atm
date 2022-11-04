@@ -1,19 +1,13 @@
-import inquirer from "inquirer";
-import { InquirerPromptFuncI } from "../ts/interfaces";
+export class ValidateVal {
 
-export function validateVal(len?: number) {
-  return (val: string) => {
-    const isValid = len ? val.length === len : val !== '';
+  len?: number | undefined;
+
+  constructor(len?: number) {
+    this.len = len || undefined;
+  }
+
+  validate(val: string) {
+    const isValid = this.len ? val.length === this.len : val !== '';
     return isValid || 'Please enter correctly!';
   }
-}
-
-export function promptInquirer({ message, validateMessage, action, defaultVal, validateFunc, name }: InquirerPromptFuncI) {
-  inquirer.prompt([{
-    type: 'input',
-    name,
-    message,
-    default: defaultVal,
-    validate: validateFunc || validateMessage,
-  }]).then(action);
 }

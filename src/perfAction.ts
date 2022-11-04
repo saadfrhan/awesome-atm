@@ -1,89 +1,89 @@
 import inquirer from "inquirer"
-import promptQuestions from ".";
+import PromptQuestions from ".";
 import { questions } from "./questions";
-import { InquirerPromptFuncI, LogsI } from "./ts/interfaces";
-import { promptInquirer } from "./utils";
+import { LogsI } from "./ts/interfaces";
 
+export default class PerfAction {
 
-export default function perfAction({ operation, money }: { operation: string, money: number }) {
-  let logs: LogsI[] = []
-  let amount = money || 0;
-  switch (operation) {
-    case 'ADD':
-      promptInquirer({
-        name: "addAmount",
-        validateMessage: "Please enter an amount!",
-        action({ addAmount }) {
-          amount += Number(addAmount)
-          logs.push({
-            event: 'ADD',
-            amountAdd: Number(addAmount),
-            date: new Date()
-          });
-          console.log('Operation Successful! 🥳\n')
-          return promptQuestions([questions[3]]);
-        },
-        message: 'Enter amount you want to deposit:',
-        validateFunc: (val) => Boolean(val)
-      });
-      break;
+  public logs: LogsI[] = []
+  public amount: number = 0;
+  public operation: string = '';
 
-    case 'TRANSFER':
-      promptInquirer({
-        name: "transfer",
-        validateMessage: "Please enter correctly!",
-        action({ transfer }) {
-          const amountDeducted = Number(transfer.split(' ')[1]);
-          const reciever = transfer.split(' ')[0];
-          const trans: LogsI = {
-            amountDeducted,
-            reciever,
-            event: 'ADD',
-            date: new Date()
-          }
-          amount -= amountDeducted;
-          logs.push(trans);
-          console.log('Operation Successful! 🥳\n')
-          return promptQuestions([questions[3]]);
-
-        },
-        message: 'Type the name of the reciever then amount',
-        defaultVal: 'John 500',
-        validateFunc: (val) => val.split(' ').length < 3
-      });
-      break;
-
-    case 'WITHDRAW':
-      promptInquirer({
-        name: "drawedAmount",
-        validateMessage: "Please enter an amount!",
-        action({ drawedAmount }) {
-          amount -= Number(drawedAmount)
-          logs.push({
-            event: 'WITHDRAW',
-            amountDeducted: Number(drawedAmount),
-            date: new Date()
-          })
-          console.log('Operation Successful! 🥳\n')
-          return promptQuestions([questions[3]]);
-
-        },
-        message: 'Enter amount you want to withdraw:',
-        validateFunc: (val) => Boolean(val),
-      });
-      break;
-
-    case 'LOGS':
-      console.log('Your logs! 🥳\n')
-      console.log(`${JSON.stringify(logs, null, 2)}\n`);
-      return promptQuestions([questions[3]])
-
-    case 'BALANCE':
-      console.log(`Your Balance: ${amount}\n`);
-      return promptQuestions([questions[3]])
-
-    default:
-      return;
+  constructor({ operation, money, logs }: { operation: string, money: number, logs?: LogsI[] }) {
+    this.amount += Number(money);
+    this.operation = operation;
+    this.logs = logs || [];
   }
-}
 
+  addMoney() {
+    inquirer.prompt([{
+      type: 'input',
+      name: 'addAmount',
+      message: 'Enter amount you want to deposit:',
+      validate: (val) => Boolean(val) || 'Please enter an amount!',
+    }]).then(({ addAmount }) => {
+      console.log(this.amount);
+      console.log(addAmount);
+      this.amount += Number(addAmount)
+      this.logs.push({
+        event: 'ADD',
+        amountAdd: Number(addAmount),
+        date: new Date()
+      });
+      console.log('Operation Successful! 🥳\n')
+      return new PromptQuestions([questions[3]]).start(this.amount, this.logs);
+    });
+  }
+
+  withdrawMoney() {
+    inquirer.prompt([{
+      type: 'input',
+      name: 'drawedAmount',
+      message: 'Enter amount you want to withdraw:',
+      validate: (val) => Boolean(val) || 'Please enter an amount!',
+    }]).then(({ drawedAmount }) => {
+      this.amount -= Number(drawedAmount)
+      this.logs.push({
+        event: 'WITHDRAW',
+        amountDeducted: Number(drawedAmount),
+        date: new Date()
+      })
+      console.log('Operation Successful! 🥳\n')
+      return new PromptQuestions([questions[3]]).start(this.amount, this.logs);
+    });
+  }
+
+  transferMoney() {
+    inquirer.prompt([{
+      type: 'input',
+      name: 'transfer',
+      message: 'Type the name of the reciever then amount',
+      default: 'John 500',
+      validate: (val) => val.split(' ').length < 3 || 'Please enter correctly!',
+    }]).then(({ transfer }) => {
+      const amountDeducted = Number(transfer.split(' ')[1]);
+      const reciever = transfer.split(' ')[0];
+      this.amount -= amountDeducted;
+      const trans: LogsI = {
+        amountDeducted,
+        reciever,
+        event: 'ADD',
+        date: new Date()
+      }
+      this.logs.push(trans);
+      console.log('Operation Successful! 🥳\n')
+      return new PromptQuestions([questions[3]]).start(this.amount, this.logs);
+    });
+  }
+
+  showLogs() {
+    console.log(`${this.logs}\n`);
+    return new PromptQuestions([questions[3]]).start(this.amount, this.logs);
+  }
+
+  showBalance() {
+    console.log(`Your balance is: ${this.amount}\n`);
+    return new PromptQuestions([questions[3]]).start(this.amount, this.logs);
+  }
+
+}

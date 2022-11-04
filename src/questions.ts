@@ -1,23 +1,23 @@
-import { validateVal } from "./utils";
+import { ValidateVal } from "./utils";
 
 export const questions = [
   {
     type: 'input',
     name: 'id',
     message: 'Enter user id:',
-    validate: validateVal(4)
+    validate: (val: string) => new ValidateVal(4).validate(val)
   },
   {
     type: 'input',
     name: 'pin',
     message: 'Enter user PIN Code:',
-    validate: validateVal(4)
+    validate: (val: string) => new ValidateVal(4).validate(val)
   },
   {
     type: 'input',
     name: 'money',
     message: 'Enter money you want to have:',
-    validate: validateVal(),
+    validate: (val: string) => new ValidateVal().validate(val),
     filter: (val: string) => Number(val)
   },
   {
