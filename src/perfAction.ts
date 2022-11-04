@@ -3,7 +3,6 @@ import promptQuestions from ".";
 import { questions } from "./questions";
 import { InquirerPromptFuncI, LogsI } from "./ts/interfaces";
 
-// Convert following into OOP
 let amount = 0;
 let logs: LogsI[] = []
 
