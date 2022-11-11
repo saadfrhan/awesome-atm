@@ -5,9 +5,9 @@ import { LogsI } from "./ts/interfaces";
 
 export default class PerfAction {
 
-  public logs: LogsI[] = []
-  public amount: number = 0;
-  public operation: string = '';
+  logs: LogsI[] = []
+  amount: number = 0;
+  operation: string = '';
 
   constructor({ operation, money, logs }: { operation: string, money: number, logs?: LogsI[] }) {
     this.amount += Number(money);
