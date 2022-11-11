@@ -1,18 +1,23 @@
-import inquirer from "inquirer"
-import PromptQuestions from ".";
-import { questions } from "./questions";
-import { LogsI } from "./ts/interfaces";
+import inquirer from 'inquirer';
+import PromptQuestions from '.';
+import { questions } from './questions';
+import { LogsI, PerfActionI } from './ts/types';
 
-export default class PerfAction {
+export default class PerfAction extends PromptQuestions {
 
-  logs: LogsI[] = []
-  amount: number = 0;
-  operation: string = '';
+  logs: LogsI[] = [];
+  amount = 0;
+  operation = '';
 
-  constructor({ operation, money, logs }: { operation: string, money: number, logs?: LogsI[] }) {
+  constructor({ operation, money, logs }: PerfActionI) {
+    super([questions[3]]);
     this.amount += Number(money);
     this.operation = operation;
     this.logs = logs || [];
+  }
+
+  promptQuestions() {
+    return this.start(this.amount, this.logs);
   }
 
   addMoney() {
@@ -22,16 +27,14 @@ export default class PerfAction {
       message: 'Enter amount you want to deposit:',
       validate: (val) => Boolean(val) || 'Please enter an amount!',
     }]).then(({ addAmount }) => {
-      console.log(this.amount);
-      console.log(addAmount);
-      this.amount += Number(addAmount)
+      this.amount += Number(addAmount);
       this.logs.push({
         event: 'ADD',
         amountAdd: Number(addAmount),
         date: new Date()
       });
-      console.log('Operation Successful! 🥳\n')
-      return new PromptQuestions([questions[3]]).start(this.amount, this.logs);
+      console.log('Operation Successful! 🥳\n');
+      return this.promptQuestions();
     });
   }
 
@@ -42,14 +45,14 @@ export default class PerfAction {
       message: 'Enter amount you want to withdraw:',
       validate: (val) => Boolean(val) || 'Please enter an amount!',
     }]).then(({ drawedAmount }) => {
-      this.amount -= Number(drawedAmount)
+      this.amount -= Number(drawedAmount);
       this.logs.push({
         event: 'WITHDRAW',
         amountDeducted: Number(drawedAmount),
         date: new Date()
-      })
-      console.log('Operation Successful! 🥳\n')
-      return new PromptQuestions([questions[3]]).start(this.amount, this.logs);
+      });
+      console.log('Operation Successful! 🥳\n');
+      return this.promptQuestions();
     });
   }
 
@@ -62,28 +65,26 @@ export default class PerfAction {
       validate: (val) => val.split(' ').length < 3 || 'Please enter correctly!',
     }]).then(({ transfer }) => {
       const amountDeducted = Number(transfer.split(' ')[1]);
-      const reciever = transfer.split(' ')[0];
       this.amount -= amountDeducted;
-      const trans: LogsI = {
+      this.logs.push({
         amountDeducted,
-        reciever,
+        reciever: transfer.split(' ')[0],
         event: 'ADD',
         date: new Date()
-      }
-      this.logs.push(trans);
-      console.log('Operation Successful! 🥳\n')
-      return new PromptQuestions([questions[3]]).start(this.amount, this.logs);
+      });
+      console.log('Operation Successful! 🥳\n');
+      return this.promptQuestions();
     });
   }
 
   showLogs() {
-    console.log(`${this.logs}\n`);
-    return new PromptQuestions([questions[3]]).start(this.amount, this.logs);
+    console.log(`${JSON.stringify(this.logs, null, 2)}\n`);
+    return this.promptQuestions();
   }
 
   showBalance() {
     console.log(`Your balance is: ${this.amount}\n`);
-    return new PromptQuestions([questions[3]]).start(this.amount, this.logs);
+    return this.promptQuestions();
   }
 
 }
