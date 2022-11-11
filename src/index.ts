@@ -3,7 +3,6 @@ import PerfAction from "./perfAction";
 import { questions } from "./questions";
 import { LogsI, StartingArgsI } from "./ts/interfaces";
 
-// ! TODO - Sort this type error!
 export default class PromptQuestions {
   questions: QuestionCollection<Answers>;
 
@@ -20,7 +19,7 @@ export default class PromptQuestions {
       inquirer.prompt(this.questions).then(({ operation }) => {
         const args: StartingArgsI = {
           operation,
-          money: moneyExists,
+          money: moneyExists as number,
           logs: logsExists
         };
         return this.findCaseAndPerform(operation, args);
