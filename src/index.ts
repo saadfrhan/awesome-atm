@@ -1,11 +1,26 @@
-import inquirer, { Answers, QuestionCollection } from "inquirer";
-import perfAction from "./perfAction";
-import { questions } from "./questions";
+import inquirer, { Answers, QuestionCollection } from 'inquirer';
+import DecideOperation from './decideOperation';
+import { questions } from './questions';
+import { LogsI } from './ts/types';
 
-export default function promptQuestions(questions: QuestionCollection<Answers>) {
-  inquirer.prompt(questions).then((vals) => (
-    perfAction({ operation: vals.operation, money: vals.money })
-  ))
+export default class PromptQuestions {
+  questions: QuestionCollection<Answers>;
+
+  constructor(questions: QuestionCollection<Answers>) {
+    this.questions = questions;
+  }
+
+  async start(amount?: number, logs?: LogsI[]): Promise<void> {
+    if (amount && logs) {
+      const { operation } = await inquirer.prompt(this.questions);
+      return DecideOperation({ operation, amount, logs });
+    } else {
+      const { operation, amount } = await inquirer.prompt(this.questions);
+      return DecideOperation({ operation, amount: Number(amount) });
+    }
+  }
 }
 
-promptQuestions(questions);
+
+new PromptQuestions(questions).start();
+
