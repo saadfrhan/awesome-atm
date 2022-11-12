@@ -8,6 +8,6 @@ export class ValidateVal {
 
   validate(val: string) {
     const isValid = this.len ? val.length === this.len : val !== '';
-    return isValid || `Please enter correctly!`;
+    return isValid || 'Please enter correctly!';
   }
 }

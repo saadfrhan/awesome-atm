@@ -1,15 +1,20 @@
-type operation = `ADD` | `TRANSFER` | `QUIT` | `WITHDRAW` | `LOGS` | `BALANCE`
+export type operation = 'ADD' | 'TRANSFER' | 'EXIT' | 'WITHDRAW' | 'LOGS' | 'BALANCE'
 
 export type LogsI = {
   event: operation;
-  reciever?: string;
-  amountDeducted?: number;
-  amountAdd?: number;
+  amount: number;
+  amountAfter: number;
   date: Date;
 }
 
-export type PerfActionI = {
-  operation: string,
-  money: number,
+export type OperationI = {
+  event: operation;
+  amount: number;
+  logs: LogsI[]
+}
+
+export type DecideOperationArgs = {
+  operation: operation;
+  amount: number;
   logs?: LogsI[]
 }
