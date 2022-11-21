@@ -1,6 +1,6 @@
 {
   "name": "@_saad/atm",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "ATM CLI using Node.js, TypeScript, and Inquirer",
   "homepage": "https://github.com/SaadFarhanIdress/node-inquirer-atm-cli",
   "type": "module",
