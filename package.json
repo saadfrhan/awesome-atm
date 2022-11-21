@@ -1,12 +1,18 @@
 {
-  "name": "typescript-atm-cli",
-  "version": "1.0.0",
+  "name": "@_saad/atm",
+  "version": "0.0.1",
   "description": "ATM CLI using Node.js, TypeScript, and Inquirer",
-  "main": "src/index.ts",
-  "scripts": {
-    "start": "ts-node src/index.ts",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts ."
+  "homepage": "https://github.com/SaadFarhanIdress/node-inquirer-atm-cli",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SaadFarhanIdress/node-inquirer-atm-cli"
   },
+  "main": "src/index",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "bin": "./src/index.ts",
   "dependencies": {
     "inquirer": "^8.0.0",
     "ts-node": "^10.9.1"
@@ -14,9 +20,6 @@
   "devDependencies": {
     "@types/inquirer": "^9.0.2",
     "@types/node": "^18.11.7",
-    "@typescript-eslint/eslint-plugin": "^5.42.1",
-    "@typescript-eslint/parser": "^5.42.1",
-    "eslint": "^8.27.0",
     "typescript": "^4.8.4"
   }
 }

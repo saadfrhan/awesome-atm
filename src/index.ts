@@ -1,3 +1,5 @@
+
+
 import inquirer, { Answers, QuestionCollection } from 'inquirer';
 import DecideOperation from './decideOperation';
 import { questions } from './questions';
@@ -21,6 +23,4 @@ export default class PromptQuestions {
   }
 }
 
-
 new PromptQuestions(questions).start();
-
