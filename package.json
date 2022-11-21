@@ -8,11 +8,14 @@
     "type": "git",
     "url": "https://github.com/SaadFarhanIdress/node-inquirer-atm-cli"
   },
-  "main": "src/index",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "prepublish": "tsc"
   },
   "bin": "./src/index",
+  "declaration": true,
+  "types": "dist/index.d.ts",
   "dependencies": {
     "inquirer": "^8.0.0",
     "ts-node": "^10.9.1"
