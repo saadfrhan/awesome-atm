@@ -1,6 +1,6 @@
 {
   "name": "@_saad/atm",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "ATM CLI using Node.js, TypeScript, and Inquirer",
   "homepage": "https://github.com/SaadFarhanIdress/node-inquirer-atm-cli",
   "type": "module",
@@ -13,8 +13,7 @@
     "start": "ts-node src/index.ts",
     "prepublish": "tsc"
   },
-  "bin": "./src/index",
-  "declaration": true,
+  "bin": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
     "inquirer": "^8.0.0",
