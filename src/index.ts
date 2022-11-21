@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 
 import inquirer, { Answers, QuestionCollection } from 'inquirer';
 import DecideOperation from './decideOperation';
