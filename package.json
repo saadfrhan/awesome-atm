@@ -1,6 +1,6 @@
 {
-  "name": "@_saad/atm",
-  "version": "0.0.4",
+  "name": "awesome-atm",
+  "version": "0.0.1",
   "description": "ATM CLI using Node.js, TypeScript, and Inquirer",
   "homepage": "https://github.com/SaadFarhanIdress/node-inquirer-atm-cli",
   "type": "module",
@@ -10,16 +10,18 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "prepublish": "tsc"
+    "start": "tsc && node dist/index",
+    "build": "tsc"
   },
   "bin": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "inquirer": "^8.0.0",
-    "ts-node": "^10.9.1"
+    "chalk": "^5.1.2",
+    "chalk-animation": "^2.0.3",
+    "inquirer": "^8.0.0"
   },
   "devDependencies": {
+    "@types/chalk-animation": "^1.6.1",
     "@types/inquirer": "^9.0.2",
     "@types/node": "^18.11.7",
     "typescript": "^4.8.4"

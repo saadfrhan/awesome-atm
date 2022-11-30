@@ -1,10 +1,11 @@
-import Operation from './operation';
-import { DecideOperationArgs } from './ts/types';
+import createOperation from './operation.js';
+import { DecideOperationArgs } from './ts/types.js';
 
 export default function DecideOperation(
   { operation, amount, logs }: DecideOperationArgs
 ) {
-  const operationInstance = new Operation({
+
+  const operationInstance = createOperation({
     event: operation,
     amount,
     logs: logs || []
@@ -18,6 +19,6 @@ export default function DecideOperation(
     case 'EXIT':
       return;
     default:
-      return operationInstance.performOperation();
+      return operationInstance.askQuestion();
   }
 }

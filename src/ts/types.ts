@@ -2,9 +2,11 @@ export type operation = 'ADD' | 'TRANSFER' | 'EXIT' | 'WITHDRAW' | 'LOGS' | 'BAL
 
 export type LogsI = {
   event: operation;
-  amount: number;
   amountAfter: number;
+  amountAdded?: number;
+  amountDeducted?: number;
   date: Date;
+  reciever?: string;
 }
 
 export type OperationI = {
@@ -17,4 +19,11 @@ export type DecideOperationArgs = {
   operation: operation;
   amount: number;
   logs?: LogsI[]
+}
+
+export type TransactionI = {
+  event: operation,
+  amount: number,
+  amountAfter: number,
+  reciever?: string
 }

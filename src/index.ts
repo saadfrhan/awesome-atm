@@ -1,26 +1,24 @@
 #!/usr/bin/env node
 
 import inquirer, { Answers, QuestionCollection } from 'inquirer';
-import DecideOperation from './decideOperation';
-import { questions } from './questions';
-import { LogsI } from './ts/types';
+import DecideOperation from './decideOperation.js';
+import { questions } from './questions.js';
+import { LogsI } from './ts/types.js';
+import { welcome } from './utils/welcome.js';
 
-export default class PromptQuestions {
-  questions: QuestionCollection<Answers>;
-
-  constructor(questions: QuestionCollection<Answers>) {
-    this.questions = questions;
-  }
-
-  async start(amount?: number, logs?: LogsI[]): Promise<void> {
-    if (amount && logs) {
-      const { operation } = await inquirer.prompt(this.questions);
-      return DecideOperation({ operation, amount, logs });
-    } else {
-      const { operation, amount } = await inquirer.prompt(this.questions);
-      return DecideOperation({ operation, amount: Number(amount) });
-    }
+export default async function promptQuestions(
+  questions: QuestionCollection<Answers>,
+  amount?: number,
+  logs?: LogsI[]
+): Promise<void> {
+  if (amount && logs) {
+    const { operation } = await inquirer.prompt(questions);
+    return DecideOperation({ operation, amount, logs });
+  } else {
+    const { operation, amount } = await inquirer.prompt(questions);
+    return DecideOperation({ operation, amount });
   }
 }
 
-new PromptQuestions(questions).start();
+await welcome();
+await promptQuestions(questions)
