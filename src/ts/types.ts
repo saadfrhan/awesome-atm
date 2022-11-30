@@ -23,7 +23,7 @@ export type DecideOperationArgs = {
 
 export type TransactionI = {
   event: operation,
-  amount: number,
+  amountGiven: number,
   amountAfter: number,
   reciever?: string
 }

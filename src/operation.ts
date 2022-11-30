@@ -39,14 +39,14 @@ export default function createOperation(args: OperationI) {
       return transferTransaction(response[event])
     }
 
-    const value = Number(response[event]);
+    const amountGiven = Number(response[event]);
     if (event === 'ADD') {
-      amount += value;
+      amount += amountGiven;
     } else {
-      amount -= value;
+      amount -= amountGiven;
     }
 
-    pustToLogs(createTransaction({ event, amount: value, amountAfter: amount }));
+    pustToLogs(createTransaction({ event, amountGiven, amountAfter: amount }));
 
     console.log(chalk.yellow('Operation done!\n'));
 
@@ -55,13 +55,13 @@ export default function createOperation(args: OperationI) {
 
   const createTransaction = ({
     event,
-    amount,
+    amountGiven,
     amountAfter,
     reciever
   }: TransactionI) => {
     const transaction = {
       event,
-      [event === 'ADD' ? "amountAdded" : "amountDeducted"]: amount,
+      [event === 'ADD' ? "amountAdded" : "amountDeducted"]: amountGiven,
       amountAfter,
       date: new Date(),
     }
@@ -72,12 +72,12 @@ export default function createOperation(args: OperationI) {
   }
 
   const transferTransaction = async (transfer: string) => {
-    const value = Number(transfer.split(' ')[1]);
+    const amountGiven = Number(transfer.split(' ')[1]);
     const reciever = transfer.split(' ')[0];
-    amount -= value;
+    amount -= amountGiven;
     pustToLogs(createTransaction({
       event,
-      amount: value,
+      amountGiven,
       amountAfter: amount,
       reciever
     }));
