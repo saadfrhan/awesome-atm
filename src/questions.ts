@@ -1,25 +1,25 @@
-import { ValidateVal } from './utils';
+import { validate } from './utils/validator.js';
 
 export const questions = [
   {
     type: 'input',
     name: 'id',
     message: 'Enter user id:',
-    validate: (val: string) => new ValidateVal(4).validate(val),
+    validate: (val: string) => validate(val),
     default: '1234'
   },
   {
     type: 'input',
     name: 'pin',
     message: 'Enter user PIN Code:',
-    validate: (val: string) => new ValidateVal(4).validate(val),
+    validate: (val: string) => validate(val),
     default: '1234'
   },
   {
     type: 'input',
     name: 'amount',
     message: 'Enter money you want to have:',
-    validate: (val: string) => new ValidateVal().validate(val),
+    validate: (val: string) => validate(val),
     filter: (val: string) => Number(val),
     default: '1000'
   },

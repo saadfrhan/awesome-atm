@@ -1,26 +1,41 @@
 #!/usr/bin/env node
 
+import chalk from 'chalk';
+import chalkAnimation from 'chalk-animation';
+
 import inquirer, { Answers, QuestionCollection } from 'inquirer';
-import DecideOperation from './decideOperation';
-import { questions } from './questions';
-import { LogsI } from './ts/types';
+import DecideOperation from './decideOperation.js';
+import { questions } from './questions.js';
+import { LogsI } from './ts/types.js';
 
-export default class PromptQuestions {
-  questions: QuestionCollection<Answers>;
+const sleep = (ms: number = 2000) => new Promise(resolve => setTimeout(resolve, ms));
 
-  constructor(questions: QuestionCollection<Answers>) {
-    this.questions = questions;
-  }
+async function welcome() {
+  const rainbowTitle = chalkAnimation.rainbow('Welcome to the ATM!');
+  await sleep();
+  console.log(`
+    ${chalk.bgBlueBright('Instructions:')}
+    ${chalk.blue('1.')} Enter User ID and PIN Code.
+    ${chalk.blue('2.')} Enter initial amount of money.
+    ${chalk.blue('3.')} Choose an Operation.
+  `);
+  rainbowTitle.stop();
+  await sleep(1000);
+}
 
-  async start(amount?: number, logs?: LogsI[]): Promise<void> {
-    if (amount && logs) {
-      const { operation } = await inquirer.prompt(this.questions);
-      return DecideOperation({ operation, amount, logs });
-    } else {
-      const { operation, amount } = await inquirer.prompt(this.questions);
-      return DecideOperation({ operation, amount: Number(amount) });
-    }
+export default async function promptQuestions(
+  questions: QuestionCollection<Answers>,
+  amount?: number,
+  logs?: LogsI[]
+): Promise<void> {
+  if (amount && logs) {
+    const { operation } = await inquirer.prompt(questions);
+    return DecideOperation({ operation, amount, logs });
+  } else {
+    const { operation, amount } = await inquirer.prompt(questions);
+    return DecideOperation({ operation, amount: Number(amount) });
   }
 }
 
-new PromptQuestions(questions).start();
+await welcome();
+await promptQuestions(questions)

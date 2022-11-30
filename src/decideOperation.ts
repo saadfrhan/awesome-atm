@@ -1,5 +1,5 @@
-import Operation from './operation';
-import { DecideOperationArgs } from './ts/types';
+import Operation from './operation.js';
+import { DecideOperationArgs } from './ts/types.js';
 
 export default function DecideOperation(
   { operation, amount, logs }: DecideOperationArgs

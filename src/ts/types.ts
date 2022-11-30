@@ -5,6 +5,7 @@ export type LogsI = {
   amount: number;
   amountAfter: number;
   date: Date;
+  reciever?: string;
 }
 
 export type OperationI = {
