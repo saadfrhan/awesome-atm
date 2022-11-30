@@ -1,5 +1,5 @@
 {
-  "name": "awsome-atm",
+  "name": "awesome-atm",
   "version": "0.0.1",
   "description": "ATM CLI using Node.js, TypeScript, and Inquirer",
   "homepage": "https://github.com/SaadFarhanIdress/node-inquirer-atm-cli",
@@ -10,7 +10,7 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "tsc && node dist/index",
     "build": "tsc"
   },
   "bin": "dist/index.js",
@@ -18,8 +18,7 @@
   "dependencies": {
     "chalk": "^5.1.2",
     "chalk-animation": "^2.0.3",
-    "inquirer": "^8.0.0",
-    "ts-node": "^10.9.1"
+    "inquirer": "^8.0.0"
   },
   "devDependencies": {
     "@types/chalk-animation": "^1.6.1",

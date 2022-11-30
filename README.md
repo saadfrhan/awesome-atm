@@ -1,9 +1,9 @@
-# @_saad/atm
+# awesome-atm
 
 Dummy ATM CLI using Node.js, TypeScript and Inquirer
 
 ## Run
 
 ```bash
-npx @_saad/atm
+npx awesome-atm
 ```

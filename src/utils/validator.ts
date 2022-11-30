@@ -1,4 +1,10 @@
-export const validate = (val: string, len: number = 4) => {
-  const isValid = len ? val.length === len : val !== '';
-  return isValid || 'Please enter correctly!';
+export const validate = (val: string | number, len: number = 4) => {
+  const isValid = () => {
+    if (typeof val === 'string') {
+      return len ? val.length === len : val !== '';
+    } else if (typeof val === 'number') {
+      return val > 0;
+    }
+  };
+  return isValid() || 'Please enter correctly!';
 }
