@@ -6,9 +6,9 @@ import { LogsI, OperationI, TransactionI } from './ts/types.js';
 
 export default function createOperation(args: OperationI) {
 
-  let logs = args.logs;
+  const logs = args.logs;
   let amount = args.amount;
-  let event = args.event;
+  const event = args.event;
 
   const askQuestion = async () => {
 
