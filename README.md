@@ -1,4 +1,4 @@
-# awesome-atm
+# atmcli
 
 Dummy ATM CLI using Node.js, TypeScript and Inquirer
 
